@@ -6,20 +6,20 @@ gum style \
         'nixxing-confupdate' 'project with questionable name made by a questionable dude'
 sleep 1
 
-cp /etc/nixos/configuration.nix ~/confupdate
+cp ~/etc/nixos/configuration.nix ~/confupdate
 isok=0
 while [ "$isok" -eq 0 ]; do
     vim ~/confupdate
-    diff --color /etc/nixos/configuration.nix ~/confupdate
+    diff --color ~/etc/nixos/configuration.nix ~/confupdate
     echo "Is this ok?"
-    answer=$(gum choose "yop", "nop", "nop, let me out")
+    answer=$(gum choose "yop" "nop" "nop, let me out")
     if [ "$answer" = "nop, let me out" ]; then
         isok=1
         exit
-    elif [ "$answer" = "yop," ]; then
+    elif [ "$answer" = "yop" ]; then
         isok=1
     fi
 done
-sudo cp ~/confupdate /etc/nixos/configuration.nix
+cp ~/confupdate ~/etc/nixos/configuration.nix
 rm ~/confupdate
 gum spin --spinner dot --show-output --title "Running rebuild -- " -- sudo nixos-rebuild switch
